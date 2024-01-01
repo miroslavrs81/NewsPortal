@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { News } from './news.entity';
+import { UserNews } from './user-news.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -16,6 +17,9 @@ export class User {
 
   @OneToMany(() => News, (news) => news.owner)
   ownerNews: News[];
+
+  @OneToMany(() => UserNews, (userNews) => userNews.user)
+  news: UserNews[];
 
   @Column({ type: 'varchar', length: 50 })
   name: string;
