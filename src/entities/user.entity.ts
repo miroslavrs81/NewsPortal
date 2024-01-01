@@ -3,14 +3,19 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { News } from './news.entity';
 
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => News, (news) => news.owner)
+  ownerNews: News[];
 
   @Column({ type: 'varchar', length: 50 })
   name: string;
