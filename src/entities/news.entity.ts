@@ -19,7 +19,7 @@ export class News {
   @OneToMany(() => UserNews, (userNews) => userNews.news)
   users: UserNews[];
 
-  @Column({ type: 'string' })
+  @Column({ type: 'varchar', length: 50 })
   title: string;
 
   @Column({ type: 'datetime' })
