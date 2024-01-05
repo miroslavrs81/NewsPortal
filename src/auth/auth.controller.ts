@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './dto/login-user.dto';
 import { UserDto } from './dto/register.dto';
+import { VerificationCodeDto } from './dto/verification-code.dto';
+import { RegenerateCodeDto } from './dto/regenerate-code.dto';
 
 @ApiTags('auth')
 @Controller('/auth')
@@ -17,5 +19,15 @@ export class AuthController {
   @Post('/login')
   async login(@Body() body: LoginDto) {
     return await this.authService.login(body);
+  }
+
+  @Post('/verification')
+  async codeVerification(@Body() code: VerificationCodeDto) {
+    return this.authService.codeVerification(code);
+  }
+
+  @Post('/regenerate-code')
+  async regenerateCode(@Body() email: RegenerateCodeDto) {
+    return await this.authService.regenerateCode(email);
   }
 }

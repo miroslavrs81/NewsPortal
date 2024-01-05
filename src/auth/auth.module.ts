@@ -5,10 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
+import { ValidationCode } from 'src/entities/validation-code.entity';
+import { MailVerificationListener } from 'src/events/mail-verification.listener';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, ValidationCode]),
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
@@ -16,7 +18,7 @@ import { JwtModule } from '@nestjs/jwt';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, MailVerificationListener],
   exports: [AuthService],
 })
 export class AuthModule {}
