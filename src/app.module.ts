@@ -8,6 +8,7 @@ import { join } from 'path';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { BullModule } from '@nestjs/bull';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { AdminMainModule } from './admin/admin-main.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
       },
     }),
     MainModule,
+    AdminMainModule,
   ],
 })
 export class AppModule {}
