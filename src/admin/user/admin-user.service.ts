@@ -9,7 +9,7 @@ import {
 } from 'nestjs-paginate';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
-import { UpdateAdminUserDto } from './dto/update-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 
 @Injectable()
@@ -42,7 +42,7 @@ export class AdminUserService {
     return await paginate<User>(query, qb, paginateConfig);
   }
 
-  async updateUser(userId: number, updateUserDto: UpdateAdminUserDto) {
+  async updateUser(userId: number, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!userId || !user) {
       throw new BadRequestException(returnMessages.UserNotFound);

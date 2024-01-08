@@ -12,7 +12,7 @@ import { AdminUserService } from './admin-user.service';
 import { AdminRoleGuard } from 'src/guards/admin-role.guard';
 import { Paginate, PaginateQuery, Paginated } from 'nestjs-paginate';
 import { User } from 'src/entities/user.entity';
-import { UpdateAdminUserDto } from './dto/update-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiTags('admin-users')
 @ApiBearerAuth()
@@ -40,7 +40,7 @@ export class AdminUserController {
   @Put('/:id')
   async updateUser(
     @Param('id', ParseIntPipe) userId: number,
-    @Body() updateUserDto: UpdateAdminUserDto,
+    @Body() updateUserDto: UpdateUserDto,
   ) {
     return await this.userService.updateUser(userId, updateUserDto);
   }

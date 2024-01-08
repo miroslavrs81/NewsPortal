@@ -5,6 +5,7 @@ import { LoginDto } from './dto/login-user.dto';
 import { UserDto } from './dto/register.dto';
 import { VerificationCodeDto } from './dto/verification-code.dto';
 import { RegenerateCodeDto } from './dto/regenerate-code.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 
 @ApiTags('auth')
 @Controller('/auth')
@@ -29,5 +30,12 @@ export class AuthController {
   @Post('/regenerate-code')
   async regenerateCode(@Body() email: RegenerateCodeDto) {
     return await this.authService.regenerateCode(email);
+  }
+
+  @Post('/forgot-password')
+  async forgotPassword(
+    @Body() forgotPassword: ForgotPasswordDto,
+  ): Promise<void> {
+    return this.authService.forgotPassword(forgotPassword);
   }
 }

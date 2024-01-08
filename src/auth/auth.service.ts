@@ -14,6 +14,7 @@ import { sendMail } from 'src/helpers/send-mail.helper';
 import { MailDataT } from 'src/types/mail-data.type';
 import { RegenerateCodeDto } from './dto/regenerate-code.dto';
 import { VerificationCodeDto } from './dto/verification-code.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -160,5 +161,17 @@ export class AuthService {
     );
 
     return this.mailVerification(user);
+  }
+
+  async forgotPassword(forgotPassword: ForgotPasswordDto): Promise<void> {
+    const user = await this.userRepository.findOneBy({
+      email: forgotPassword.email,
+    });
+
+    if (!user) {
+      throw new BadRequestException(returnMessages.UserNotFound);
+    }
+
+    // todo
   }
 }
