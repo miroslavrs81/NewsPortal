@@ -1,12 +1,15 @@
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { UserNews } from './user-news.entity';
+import { NewsCategory } from './news_category.entity';
 
 @Entity({ name: 'news' })
 export class News {
@@ -19,14 +22,17 @@ export class News {
   @OneToMany(() => UserNews, (userNews) => userNews.news)
   users: UserNews[];
 
+  @ManyToMany(() => NewsCategory, (newsCategory) => newsCategory.news, {
+    cascade: true,
+  })
+  @JoinTable()
+  newsCategories: NewsCategory[];
+
   @Column({ type: 'varchar', length: 50 })
   title: string;
 
   @Column({ type: 'datetime' })
   datetime: Date;
-
-  @Column({ type: 'varchar', length: 50 })
-  category: string;
 
   @Column({ type: 'text' })
   text: string;
