@@ -23,4 +23,42 @@ export class NewsCategoryService {
     }
     return await this.newsCategoryRepository.save(createCategoryDto);
   }
+
+  async updateCategoryTitle(
+    id: number,
+    updateCategoryDto: CreateNewsCategoryDto,
+  ): Promise<NewsCategory> {
+    const category = await this.newsCategoryRepository.findOneBy({
+      id,
+    });
+    if (!category) {
+      throw new BadRequestException(returnMessages.CategoryNotFound);
+    }
+
+    category.category = updateCategoryDto.category;
+    const updatedCategory = await this.newsCategoryRepository.save(category);
+    return updatedCategory;
+  }
+
+  async getCategoryList(sortOrder: 'ASC' | 'DESC'): Promise<{
+    category: NewsCategory[];
+    count: number;
+  }> {
+    const qb = this.newsCategoryRepository.createQueryBuilder('categories');
+
+    const [category, count] = await qb
+      .orderBy('categories.category', sortOrder as 'ASC' | 'DESC')
+      .getManyAndCount();
+    return { category, count };
+  }
+
+  async deleteCategory(id: number): Promise<void> {
+    const category = await this.newsCategoryRepository.findOneBy({
+      id,
+    });
+    if (!category) {
+      throw new BadRequestException(returnMessages.CategoryNotFound);
+    }
+    await this.newsCategoryRepository.remove(category);
+  }
 }

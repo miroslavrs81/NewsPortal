@@ -12,4 +12,5 @@ export const returnMessages = Object.freeze({
   LimitReached: 'Limit reached!',
   CategoryNameLength: 'Category name must be between 1 and 50 characters!',
   CategoryAlreadyExists: 'News category already exists',
+  CategoryNotFound: 'News category not found',
 });
