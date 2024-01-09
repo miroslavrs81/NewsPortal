@@ -10,4 +10,6 @@ export const returnMessages = Object.freeze({
   CodeNotValid: 'Code is not valid!',
   BadUserCode: 'Bad Code!',
   LimitReached: 'Limit reached!',
+  CategoryNameLength: 'Category name must be between 1 and 50 characters!',
+  CategoryAlreadyExists: 'News category already exists',
 });
