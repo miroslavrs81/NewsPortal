@@ -173,5 +173,36 @@ export class AuthService {
     }
 
     // todo
+    //   const resetToken = this.generateResetToken(user);
+    //   await this.sendResetPasswordEmail(forgotPassword.email, resetToken);
+    // }
+
+    // private async sendResetPasswordEmail(
+    //   email: string,
+    //   token: string,
+    // ): Promise<void> {
+
+    //   const mailData: MailDataT = {
+    //     email,
+    //     subject: 'Reset Password',
+    //     template: 'reset-password',
+    //       token,
+    //     },
+    //     mailerService: this.mailerService,
+    //   };
+
+    //   if (await sendMail(mailData)) {
+    //     // Handle email sent successfully
+    //   } else {
+    //     // Handle email sending failure
+    //     throw new BadRequestException(returnMessages.EmailSendingFailed);
+    //   }
+    // }
+
+    // private generateResetToken(user: User): string {
+
+    //   return jwt.sign({ userId: user.id }, 'your-secret-key', {
+    //     expiresIn: '1h',
+    //   });
   }
 }
