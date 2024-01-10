@@ -41,7 +41,7 @@ export class NewsCategoryController {
 
   @Get('/')
   async getCategoryList(
-    @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'ASC',
+    @Query('sortOrder') sortOrder: 'ASC' | 'DESC',
   ): Promise<{
     category: NewsCategory[];
     count: number;
