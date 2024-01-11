@@ -37,6 +37,6 @@ export class News {
   @Column({ type: 'text' })
   text: string;
 
-  @Column({ type: 'longblob' })
-  image: Buffer;
+  @Column('uuid', { array: true, nullable: true })
+  images: string[];
 }

@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 
 @Injectable()
-export class NewsCategoryService {
+export class AdminNewsCategoryService {
   constructor(
     @InjectRepository(NewsCategory)
     private newsCategoryRepository: Repository<NewsCategory>,

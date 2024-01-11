@@ -10,16 +10,16 @@ import {
   Get,
   Query,
 } from '@nestjs/common';
-import { NewsCategoryService } from './news-category.service';
 import { CreateNewsCategoryDto } from './dto/create-news-category.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { NewsCategory } from 'src/entities/news_category.entity';
+import { AdminNewsCategoryService } from './admin-news-category.service';
 
 @ApiTags('admin-news-category')
 @ApiBearerAuth()
 @Controller('/admin/news-categories')
-export class NewsCategoryController {
-  constructor(private readonly newsCategoryService: NewsCategoryService) {}
+export class AdminNewsCategoryController {
+  constructor(private readonly newsCategoryService: AdminNewsCategoryService) {}
 
   @Post()
   async createNewsCategory(
