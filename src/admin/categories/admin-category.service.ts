@@ -1,34 +1,34 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateNewsCategoryDto } from './dto/create-news-category.dto';
+import { CreateCategoryDto } from './dto/create-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { NewsCategory } from 'src/entities/news_category.entity';
+import { Category } from 'src/entities/category.entity';
 import { Repository } from 'typeorm';
 import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 
 @Injectable()
-export class AdminNewsCategoryService {
+export class AdminCategoryService {
   constructor(
-    @InjectRepository(NewsCategory)
-    private newsCategoryRepository: Repository<NewsCategory>,
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>,
   ) {}
 
-  async createNewsCategory(
-    createCategoryDto: CreateNewsCategoryDto,
-  ): Promise<NewsCategory> {
-    const category = await this.newsCategoryRepository.findOneBy({
+  async createCategory(
+    createCategoryDto: CreateCategoryDto,
+  ): Promise<Category> {
+    const category = await this.categoryRepository.findOneBy({
       category: createCategoryDto.category,
     });
     if (category) {
       throw new BadRequestException(returnMessages.CategoryAlreadyExists);
     }
-    return await this.newsCategoryRepository.save(createCategoryDto);
+    return await this.categoryRepository.save(createCategoryDto);
   }
 
   async updateCategoryTitle(
     id: number,
-    updateCategoryDto: CreateNewsCategoryDto,
-  ): Promise<NewsCategory> {
-    const category = await this.newsCategoryRepository.findOneBy({
+    updateCategoryDto: CreateCategoryDto,
+  ): Promise<Category> {
+    const category = await this.categoryRepository.findOneBy({
       id,
     });
     if (!category) {
@@ -36,15 +36,15 @@ export class AdminNewsCategoryService {
     }
 
     category.category = updateCategoryDto.category;
-    const updatedCategory = await this.newsCategoryRepository.save(category);
+    const updatedCategory = await this.categoryRepository.save(category);
     return updatedCategory;
   }
 
   async getCategoryList(sortOrder: 'ASC' | 'DESC'): Promise<{
-    category: NewsCategory[];
+    category: Category[];
     count: number;
   }> {
-    const qb = this.newsCategoryRepository.createQueryBuilder('categories');
+    const qb = this.categoryRepository.createQueryBuilder('categories');
 
     const [category, count] = await qb
       .orderBy('categories.category', sortOrder as 'ASC' | 'DESC')
@@ -53,12 +53,12 @@ export class AdminNewsCategoryService {
   }
 
   async deleteCategory(id: number): Promise<void> {
-    const category = await this.newsCategoryRepository.findOneBy({
+    const category = await this.categoryRepository.findOneBy({
       id,
     });
     if (!category) {
       throw new BadRequestException(returnMessages.CategoryNotFound);
     }
-    await this.newsCategoryRepository.remove(category);
+    await this.categoryRepository.remove(category);
   }
 }
