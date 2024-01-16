@@ -8,7 +8,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { News } from './news.entity';
-import { UserNews } from './user-news.entity';
 import { ValidationCode } from './validation-code.entity';
 
 @Entity({ name: 'users' })
@@ -16,11 +15,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => News, (news) => news.owner)
-  ownerNews: News[];
-
-  @OneToMany(() => UserNews, (userNews) => userNews.user)
-  news: UserNews[];
+  @OneToMany(() => News, (news) => news.author)
+  news: News[];
 
   @OneToMany(() => ValidationCode, (code) => code.user)
   code: ValidationCode;
