@@ -14,4 +14,6 @@ export const returnMessages = Object.freeze({
   CategoryAlreadyExists: 'News category already exists',
   CategoryNotFound: 'News category not found',
   TitleLength: 'Title length must be between 1 and 50 characters!',
+  NewsNotFound: 'News not found',
+  ImageIncorrectFormat: 'Image incorrect format',
 });
