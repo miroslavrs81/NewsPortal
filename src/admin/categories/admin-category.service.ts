@@ -47,7 +47,7 @@ export class AdminCategoryService {
     const qb = this.categoryRepository.createQueryBuilder('categories');
 
     const [category, count] = await qb
-      .orderBy('categories.category', sortOrder as 'ASC' | 'DESC')
+      .orderBy('categories.id', sortOrder as 'ASC' | 'DESC')
       .getManyAndCount();
     return { category, count };
   }

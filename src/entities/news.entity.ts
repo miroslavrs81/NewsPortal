@@ -3,13 +3,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
-import { Category } from './category.entity';
+import { Image } from './image.entity';
+import { NewsCategory } from './news-category.entity';
 
 @Entity({ name: 'news' })
 export class News {
@@ -19,9 +19,11 @@ export class News {
   @ManyToOne(() => User, (user) => user.news)
   author: User;
 
-  @ManyToMany(() => Category, (category) => category.news)
-  @JoinTable()
-  categories: Category[];
+  @OneToMany(() => NewsCategory, (newsCategory) => newsCategory.news)
+  categories: NewsCategory[];
+
+  @OneToMany(() => Image, (images) => images.news)
+  images: Image[];
 
   @Column({ type: 'varchar', length: 50 })
   title: string;
@@ -31,9 +33,6 @@ export class News {
 
   @Column({ type: 'text' })
   text: string;
-
-  @Column({ type: 'uuid', nullable: true })
-  images: string[];
 
   @DeleteDateColumn()
   deletedAt: Date;

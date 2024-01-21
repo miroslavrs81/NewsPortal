@@ -14,10 +14,8 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Category } from 'src/entities/category.entity';
 import { AdminCategoryService } from './admin-category.service';
-import { GetUser } from 'src/decorator/get-user.decorator';
-import { User } from 'src/entities/user.entity';
 
-@ApiTags('admin-category')
+@ApiTags('admin-categories')
 @ApiBearerAuth()
 @Controller('/admin/categories')
 export class AdminCategoryController {
@@ -25,7 +23,6 @@ export class AdminCategoryController {
 
   @Post()
   async createCategory(
-    @GetUser() user: User,
     @Body() createCategoryDto: CreateCategoryDto,
   ): Promise<Category> {
     return await this.categoryService.createCategory(createCategoryDto);
