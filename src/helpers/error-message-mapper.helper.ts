@@ -15,5 +15,6 @@ export const returnMessages = Object.freeze({
   CategoryNotFound: 'News category not found',
   TitleLength: 'Title length must be between 1 and 50 characters!',
   NewsNotFound: 'News not found',
+  NewsNotDeleted: 'News not deleted',
   ImageIncorrectFormat: 'Image incorrect format',
 });

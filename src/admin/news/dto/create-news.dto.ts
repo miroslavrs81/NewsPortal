@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
-  IsDateString,
+  IsNumber,
   IsOptional,
   IsString,
   Length,
@@ -16,12 +16,14 @@ export class CreateNewsDto {
   })
   title: string;
 
-  @IsDateString()
-  datetime: Date;
-
   @ApiProperty()
   @IsString()
   text: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsNumber()
+  categoryId?: number[];
 
   @ApiProperty()
   @IsArray()
