@@ -10,6 +10,7 @@ import { CreateNewsDto } from './dto/create-news.dto';
 import { User } from 'src/entities/user.entity';
 import { Category } from 'src/entities/category.entity';
 import { returnMessages } from 'src/helpers/error-message-mapper.helper';
+import { UpdateNewsDto } from './dto/update-news.dto';
 
 @Injectable()
 export class AdminNewsService {
@@ -35,8 +36,25 @@ export class AdminNewsService {
       text: newsDto.text,
       category: category,
     });
-
     return news;
+  }
+
+  async updateNews(id: number, updateNewsDto: UpdateNewsDto, user: User) {
+    const news = await this.newsRepository
+      .createQueryBuilder('news')
+      .leftJoin('news.author', 'author')
+      .where({ id, author: user.id })
+      .getOne();
+
+    if (!news) {
+      throw new BadRequestException(returnMessages.NewsNotFound);
+    }
+
+    return await this.newsRepository.save({
+      ...news,
+      title: updateNewsDto.title,
+      text: updateNewsDto.text,
+    });
   }
 
   async removeNews(id: number, user: User) {
@@ -61,7 +79,6 @@ export class AdminNewsService {
     if (!news) {
       throw new NotFoundException(returnMessages.NewsNotFound);
     }
-
     if (news.deletedAt === null) {
       throw new BadRequestException(returnMessages.NewsNotDeleted);
     }

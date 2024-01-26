@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { AdminNewsService } from './admin-news.service';
@@ -17,6 +18,7 @@ import { AdminRoleGuard } from 'src/guards/admin-role.guard';
 import { GetUser } from 'src/decorator/get-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/entities/user.entity';
+import { UpdateNewsDto } from './dto/update-news.dto';
 
 @UseGuards(AdminRoleGuard)
 @ApiTags('admin-news')
@@ -33,6 +35,17 @@ export class AdminNewsController {
     @Body() newsDto: CreateNewsDto,
   ): Promise<News> {
     return this.newsService.createNews(user, newsDto);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Put('/:id')
+  async updateWorkspace(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateNewsDto: UpdateNewsDto,
+    @GetUser() user: User,
+  ) {
+    return await this.newsService.updateNews(+id, updateNewsDto, user);
   }
 
   @ApiBearerAuth()
