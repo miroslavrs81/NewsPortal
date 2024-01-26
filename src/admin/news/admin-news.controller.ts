@@ -40,7 +40,7 @@ export class AdminNewsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Put('/:id')
-  async updateWorkspace(
+  async updateNews(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateNewsDto: UpdateNewsDto,
     @GetUser() user: User,
