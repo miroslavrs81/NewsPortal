@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsArray,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Length,
-} from 'class-validator';
+import { IsArray, IsOptional, IsString, Length } from 'class-validator';
 import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 
 export class CreateNewsDto {
@@ -22,8 +16,7 @@ export class CreateNewsDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsNumber()
-  categoryId?: number[];
+  categoryId?: number;
 
   @ApiProperty()
   @IsArray()

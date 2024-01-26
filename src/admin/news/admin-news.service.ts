@@ -9,7 +9,6 @@ import { Repository } from 'typeorm';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { User } from 'src/entities/user.entity';
 import { Category } from 'src/entities/category.entity';
-import { NewsCategory } from 'src/entities/news-category.entity';
 import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 
 @Injectable()
@@ -19,24 +18,24 @@ export class AdminNewsService {
     private newsRepository: Repository<News>,
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
-    @InjectRepository(NewsCategory)
-    private newsCategoryRepository: Repository<NewsCategory>,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
   async createNews(author: User, newsDto: CreateNewsDto): Promise<News> {
+    const category = await this.categoryRepository.findOne({
+      where: { id: newsDto.categoryId },
+    });
+
+    if (!category) {
+      throw new Error(returnMessages.CategoryNotFound);
+    }
     const news = await this.newsRepository.save({
       author,
       title: newsDto.title,
       text: newsDto.text,
-      categoryId: newsDto.categoryId,
+      category: category,
     });
 
-    //to fix categoryId
-    await this.newsCategoryRepository.save({
-      news,
-      categoryId: newsDto.categoryId,
-    });
     return news;
   }
 

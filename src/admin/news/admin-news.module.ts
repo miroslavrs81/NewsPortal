@@ -6,12 +6,9 @@ import { News } from 'src/entities/news.entity';
 import { Category } from 'src/entities/category.entity';
 import { User } from 'src/entities/user.entity';
 import { Image } from 'src/entities/image.entity';
-import { NewsCategory } from 'src/entities/news-category.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([News, Category, User, Image, NewsCategory]),
-  ],
+  imports: [TypeOrmModule.forFeature([News, Category, User, Image])],
   controllers: [AdminNewsController],
   providers: [AdminNewsService],
 })

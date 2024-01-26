@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { Image } from './image.entity';
-import { NewsCategory } from './news-category.entity';
+import { Category } from './category.entity';
 
 @Entity({ name: 'news' })
 export class News {
@@ -19,8 +19,8 @@ export class News {
   @ManyToOne(() => User, (user) => user.news)
   author: User;
 
-  @OneToMany(() => NewsCategory, (newsCategory) => newsCategory.news)
-  categories: NewsCategory[];
+  @ManyToOne(() => Category, (category) => category.news)
+  category: Category;
 
   @OneToMany(() => Image, (images) => images.news)
   images: Image[];
