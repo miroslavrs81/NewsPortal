@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
-  FilterOperator,
   PaginateConfig,
   PaginateQuery,
   Paginated,
@@ -20,24 +19,16 @@ export class HomepageService {
   async getNewsByCategories(query: PaginateQuery): Promise<Paginated<News>> {
     const paginateConfig: PaginateConfig<News> = {
       defaultLimit: 20,
-      relations: ['category', 'author'],
-      sortableColumns: ['id', 'datetime'],
-      defaultSortBy: [['category.category', 'DESC']],
-      searchableColumns: ['title', 'text'],
+      relations: ['category'],
+      sortableColumns: ['id'],
+      defaultSortBy: [['category.category', 'ASC']],
       select: [
-        'id',
-        'title',
-        'text',
-        'datetime',
-        'author.id',
-        'category.id',
+        'news.title',
+        'SUBSTRING_INDEX(news.text, ".", 1) as truncatedText',
         'category.category',
       ],
-      filterableColumns: { 'category.id': [FilterOperator.EQ] },
     };
-    const qb = this.newsRepository
-      .createQueryBuilder('news')
-      .leftJoin('news.category', 'categories.id');
+    const qb = this.newsRepository.createQueryBuilder('news');
     return await paginate<News>(query, qb, paginateConfig);
   }
 }
