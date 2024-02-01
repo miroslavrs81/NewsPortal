@@ -9,9 +9,11 @@ import {
   Post,
   Put,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { AdminNewsService } from './admin-news.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { News } from 'src/entities/news.entity';
 import { AdminRoleGuard } from 'src/guards/admin-role.guard';
@@ -19,6 +21,11 @@ import { GetUser } from 'src/decorator/get-user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/entities/user.entity';
 import { UpdateNewsDto } from './dto/update-news.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { newsImagesStorage } from 'src/config/multer.config';
+import { FileValidator } from 'src/validators/file.validator';
+import { CreateImageType } from 'src/types/image.type';
+// import { CreateImageDto } from './dto/create-image.dto';
 
 @UseGuards(AdminRoleGuard)
 @ApiTags('admin-news')
@@ -46,6 +53,61 @@ export class AdminNewsController {
     @GetUser() user: User,
   ) {
     return await this.newsService.updateNews(+id, updateNewsDto, user);
+  }
+
+  // @ApiConsumes('multipart/form-data')
+  // @ApiBody({
+  //   schema: {
+  //     type: 'object',
+  //     properties: {
+  //       images: {
+  //         type: 'array',
+  //         items: {
+  //           type: 'string',
+  //           format: 'binary',
+  //         },
+  //       },
+  //     },
+  //   },
+  // })
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // @Post('/upload')
+  // @UseInterceptors(FilesInterceptor('newsimages', 5, newsImagesStorage))
+  // async uploadImages(
+  //   @UploadedFiles(FileValidator)
+  //   newsimages: Express.Multer.File[],
+  //   @GetUser() user: User,
+  // ): Promise<{
+  //   imagesUploaded: { id: number; name: string; path: string }[];
+  //   imagesFailed: { name: string; message: string }[];
+  // }> {
+  //   return await this.newsService.uploadImages(newsimages, user);
+  // }
+
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        newsimages: {
+          type: 'string',
+          format: 'binary',
+        },
+        // newsId: {
+        //   type: 'number',
+        // },
+      },
+    },
+  })
+  @Post('/newsimages')
+  @UseInterceptors(FileInterceptor('newsimages', newsImagesStorage))
+  async createImage(
+    // @Body() createImageDto: CreateImageDto,
+    @UploadedFile(FileValidator)
+    newsimages: Express.Multer.File,
+  ): Promise<CreateImageType> {
+    return await this.newsService.createImage(/*createImageDto,*/ newsimages);
   }
 
   @ApiBearerAuth()
