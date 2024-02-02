@@ -18,7 +18,7 @@ import * as fs from 'fs';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CreateImageType } from 'src/types/image.type';
 import { join } from 'path';
-// import { CreateImageDto } from './dto/create-image.dto';
+import { CreateImageDto } from './dto/create-image.dto';
 // import { resizeImage } from 'src/helpers/gm.helper';
 
 @Injectable()
@@ -126,7 +126,7 @@ export class AdminNewsService {
   // }
 
   async createImage(
-    //  createImageDto: CreateImageDto,
+    createImageDto: CreateImageDto,
     newsimages: Express.Multer.File,
   ): Promise<CreateImageType> {
     if (fs.existsSync(newsimages.path)) {
@@ -138,16 +138,17 @@ export class AdminNewsService {
         ),
       );
     } else {
-      throw new NotFoundException('Image does not exist');
+      throw new NotFoundException(returnMessages.ImageNotFound);
     }
-    /* const newsId = createImageDto.newsId;
-    if (isNaN(newsId) || newsId <= 0) {
-      throw new BadRequestException('Invalid newsId');
-    }*/
-
+    const newsId = await this.newsRepository.findOne({
+      where: { id: createImageDto.newsId },
+    });
+    if (!newsId) {
+      throw new Error(returnMessages.NewsNotFound);
+    }
     const newImage = await this.imagesRepository.save({
       name: newsimages.filename,
-      /* newsId: +createImageDto.newsId,*/
+      news: newsId,
     });
     const path = makeUrlPath(['newsimagesStorage', newImage.name]);
     return {

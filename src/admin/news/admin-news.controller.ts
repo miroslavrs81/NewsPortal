@@ -25,7 +25,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { newsImagesStorage } from 'src/config/multer.config';
 import { FileValidator } from 'src/validators/file.validator';
 import { CreateImageType } from 'src/types/image.type';
-// import { CreateImageDto } from './dto/create-image.dto';
+import { CreateImageDto } from './dto/create-image.dto';
 
 @UseGuards(AdminRoleGuard)
 @ApiTags('admin-news')
@@ -94,20 +94,20 @@ export class AdminNewsController {
           type: 'string',
           format: 'binary',
         },
-        // newsId: {
-        //   type: 'number',
-        // },
+        newsId: {
+          type: 'number',
+        },
       },
     },
   })
   @Post('/newsimages')
   @UseInterceptors(FileInterceptor('newsimages', newsImagesStorage))
   async createImage(
-    // @Body() createImageDto: CreateImageDto,
+    @Body() createImageDto: CreateImageDto,
     @UploadedFile(FileValidator)
     newsimages: Express.Multer.File,
   ): Promise<CreateImageType> {
-    return await this.newsService.createImage(/*createImageDto,*/ newsimages);
+    return await this.newsService.createImage(createImageDto, newsimages);
   }
 
   @ApiBearerAuth()
