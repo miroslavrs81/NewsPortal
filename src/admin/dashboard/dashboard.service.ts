@@ -47,7 +47,7 @@ export class DashboardService {
   async getNewsList(query: PaginateQuery): Promise<Paginated<News>> {
     const paginateConfig: PaginateConfig<News> = {
       defaultLimit: 20,
-      relations: ['category', 'author'],
+      relations: ['category', 'author', 'images'],
       sortableColumns: ['id', 'datetime'],
       defaultSortBy: [['id', 'ASC']],
       searchableColumns: ['title', 'text'],
@@ -59,6 +59,7 @@ export class DashboardService {
         'deletedAt',
         'author.id',
         'category.id',
+        'images.id',
       ],
       filterableColumns: { 'category.id': [FilterOperator.EQ] },
     };
