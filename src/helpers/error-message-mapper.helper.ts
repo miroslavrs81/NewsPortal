@@ -18,4 +18,5 @@ export const returnMessages = Object.freeze({
   NewsNotDeleted: 'News not deleted',
   ImageIncorrectFormat: 'Image incorrect format',
   ImageNotFound: 'Image not found',
+  SomethingWentWrong: 'Something went wrong',
 });
