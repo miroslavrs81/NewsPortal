@@ -6,6 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('/page')
 export class PageController {
   constructor(private readonly pageService: PageService) {}
+
   @Get('/')
   async getPage() {
     return await this.pageService.getPage();

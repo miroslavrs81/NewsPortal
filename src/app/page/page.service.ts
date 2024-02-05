@@ -5,8 +5,7 @@ import * as fs from 'fs';
 export class PageService {
   async getPage() {
     try {
-      const data = await fs.promises.readFile('page.txt', 'utf8');
-      return data;
+      return await fs.promises.readFile('page.txt', 'utf8');
     } catch (err) {
       console.error('Error reading page.txt:', err);
       throw err;
