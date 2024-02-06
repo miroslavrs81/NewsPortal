@@ -14,7 +14,6 @@ import { sendMail } from 'src/helpers/send-mail.helper';
 import { MailDataT } from 'src/types/mail-data.type';
 import { RegenerateCodeDto } from './dto/regenerate-code.dto';
 import { VerificationCodeDto } from './dto/verification-code.dto';
-import { ForgotPasswordDto } from './dto/forgot-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -67,6 +66,13 @@ export class AuthService {
     if (user.emailVerifiedAt === null) {
       throw new BadRequestException(returnMessages.EmailNotVerified);
     }
+
+    const rememberMe = loginDto.rememberMe;
+
+    if (rememberMe !== undefined) {
+      await this.userRepository.update(user.id, { rememberMe });
+    }
+
     const payload = {
       id: user.id,
       name: user.name,
@@ -74,12 +80,17 @@ export class AuthService {
       role: user.role,
     };
     delete user.password;
+
+    const expiresIn = rememberMe
+      ? process.env.JWT_EXPIRATION_TIME_REMEMBER_ME
+      : process.env.JWT_EXPIRATION_TIME;
+
     return {
       message: returnMessages.UserSuccessfullyLoggedIn,
       data: user,
       access_token: this.jwtService.sign(payload, {
         privateKey: process.env.JWT_SECRET,
-        expiresIn: process.env.JWT_EXPIRATION_TIME,
+        expiresIn,
       }),
     };
   }
@@ -161,48 +172,5 @@ export class AuthService {
     );
 
     return this.mailVerification(user);
-  }
-
-  async forgotPassword(forgotPassword: ForgotPasswordDto): Promise<void> {
-    const user = await this.userRepository.findOneBy({
-      email: forgotPassword.email,
-    });
-
-    if (!user) {
-      throw new BadRequestException(returnMessages.UserNotFound);
-    }
-
-    // todo
-    //   const resetToken = this.generateResetToken(user);
-    //   await this.sendResetPasswordEmail(forgotPassword.email, resetToken);
-    // }
-
-    // private async sendResetPasswordEmail(
-    //   email: string,
-    //   token: string,
-    // ): Promise<void> {
-
-    //   const mailData: MailDataT = {
-    //     email,
-    //     subject: 'Reset Password',
-    //     template: 'reset-password',
-    //       token,
-    //     },
-    //     mailerService: this.mailerService,
-    //   };
-
-    //   if (await sendMail(mailData)) {
-    //     // Handle email sent successfully
-    //   } else {
-    //     // Handle email sending failure
-    //     throw new BadRequestException(returnMessages.EmailSendingFailed);
-    //   }
-    // }
-
-    // private generateResetToken(user: User): string {
-
-    //   return jwt.sign({ userId: user.id }, 'your-secret-key', {
-    //     expiresIn: '1h',
-    //   });
   }
 }

@@ -33,6 +33,9 @@ export class User {
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
+  @Column({ type: 'boolean', default: false })
+  rememberMe: boolean;
+
   @Column({ type: 'varchar', default: 'user' })
   role: string;
 
