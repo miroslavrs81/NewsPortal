@@ -19,4 +19,7 @@ export const returnMessages = Object.freeze({
   ImageIncorrectFormat: 'Image incorrect format',
   ImageNotFound: 'Image not found',
   SomethingWentWrong: 'Something went wrong',
+  ResetTokenSent: 'Reset token sent successfully',
+  InvalidResetToken: 'Invalid or expired reset token',
+  PasswordReset: 'Password reset successfully',
 });

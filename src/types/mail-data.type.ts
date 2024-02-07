@@ -15,4 +15,5 @@ export type ContextT = {
   userName?: string;
   token?: string;
   link?: string;
+  resetToken?: string;
 };

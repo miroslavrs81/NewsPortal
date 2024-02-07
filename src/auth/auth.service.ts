@@ -14,6 +14,8 @@ import { sendMail } from 'src/helpers/send-mail.helper';
 import { MailDataT } from 'src/types/mail-data.type';
 import { RegenerateCodeDto } from './dto/regenerate-code.dto';
 import { VerificationCodeDto } from './dto/verification-code.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ForgotPasswordDto } from './forgot-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -172,5 +174,58 @@ export class AuthService {
     );
 
     return this.mailVerification(user);
+  }
+
+  async forgotPassword(forgotPasswordDto: ForgotPasswordDto) {
+    const user = await this.userRepository.findOne({
+      where: { email: forgotPasswordDto.email },
+    });
+
+    if (!user) {
+      throw new BadRequestException(returnMessages.UserNotFound);
+    }
+
+    const resetToken = Math.random().toString(36).toUpperCase().slice(2, 8);
+    await this.validationCodeRepository.save({
+      user: user,
+      code: resetToken,
+      isValid: true,
+    });
+
+    const mailData: MailDataT = {
+      email: user.email,
+      subject: 'Password Reset',
+      template: 'password-reset-email',
+      context: {
+        userName: user.name,
+        resetToken,
+      },
+      mailerService: this.mailerService,
+    };
+    await sendMail(mailData);
+
+    return { message: returnMessages.ResetTokenSent };
+  }
+
+  async resetPassword(token: string, resetPasswordDto: ResetPasswordDto) {
+    const userCode = await this.validationCodeRepository.findOne({
+      where: { code: token, isValid: true },
+      relations: ['user'],
+    });
+
+    if (!userCode) {
+      throw new BadRequestException(returnMessages.InvalidResetToken);
+    }
+
+    const newPassword = await bcrypt.hash(resetPasswordDto.newPassword, 10);
+    await this.userRepository.update(userCode.user.id, {
+      password: newPassword,
+    });
+
+    await this.validationCodeRepository.update(userCode.id, {
+      isValid: false,
+    });
+
+    return { message: returnMessages.PasswordReset };
   }
 }
