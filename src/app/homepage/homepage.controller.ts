@@ -16,7 +16,7 @@ export class HomepageController {
     return await this.homepageService.getNewsByCategories(query);
   }
 
-  @Get()
+  @Get('/news-with-images')
   async getAllNewsWithImages(): Promise<News[]> {
     return this.homepageService.getAllNewsWithImages();
   }
