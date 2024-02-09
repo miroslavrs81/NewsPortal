@@ -22,7 +22,10 @@ export class News {
   @ManyToOne(() => Category, (category) => category.news)
   category: Category;
 
-  @OneToMany(() => Image, (images) => images.news)
+  @OneToMany(() => Image, (images) => images.news, {
+    eager: true,
+    cascade: true,
+  })
   images: Image[];
 
   @Column({ type: 'varchar', length: 50 })

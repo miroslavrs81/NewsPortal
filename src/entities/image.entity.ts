@@ -13,7 +13,9 @@ export class Image {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => News, (news) => news.images, { onDelete: 'CASCADE' })
+  @ManyToOne(() => News, (news) => news.images, {
+    onDelete: 'CASCADE',
+  })
   news: News;
 
   @Column({ type: 'uuid' })
