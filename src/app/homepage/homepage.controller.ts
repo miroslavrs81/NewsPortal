@@ -15,4 +15,9 @@ export class HomepageController {
   ): Promise<Paginated<News>> {
     return await this.homepageService.getNewsByCategories(query);
   }
+
+  @Get()
+  async getAllNewsWithImages(): Promise<News[]> {
+    return this.homepageService.getAllNewsWithImages();
+  }
 }

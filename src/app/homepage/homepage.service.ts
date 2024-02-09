@@ -31,4 +31,10 @@ export class HomepageService {
     const qb = this.newsRepository.createQueryBuilder('news');
     return await paginate<News>(query, qb, paginateConfig);
   }
+
+  async getAllNewsWithImages(): Promise<News[]> {
+    return this.newsRepository.find({
+      relations: ['images'],
+    });
+  }
 }
