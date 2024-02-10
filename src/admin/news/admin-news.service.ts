@@ -69,63 +69,7 @@ export class AdminNewsService {
     });
   }
 
-  // async uploadImages(
-  //   imagesUploaded: Array<Express.Multer.File>,
-  //   user: User,
-  // ): Promise<{
-  //   imagesUploaded: { id: number; name: string; path: string }[];
-  //   imagesFailed: { name: string; message: string }[];
-  // }> {
-  //   const uploadedPhotos = [];
-  //   const failedPhotos = [];
-
-  //   const thumbnailPath = join(
-  //     __dirname,
-  //     '../../../public/newsimages',
-  //     process.env.BASE_THUMBNAIL_SIZE,
-  //   );
-
-  //   if (!existsSync(thumbnailPath)) {
-  //     mkdirSync(thumbnailPath, { recursive: true });
-  //   }
-
-  //   for (const image of imagesUploaded) {
-  //     const imagePath = join(
-  //       __dirname,
-  //       '../../../uploads/newsimages/',
-  //       image.filename,
-  //     );
-
-  //     if (await resizeImage(imagePath, join(thumbnailPath, image.filename))) {
-  //       const photo = await this.imagesRepository.save({
-  //         name: image.filename,
-  //         user,
-  //       });
-
-  //       uploadedPhotos.push({
-  //         id: photo.id,
-  //         name: photo.name,
-  //         path: makeUrlPath([
-  //           'newsimages',
-  //           process.env.BASE_THUMBNAIL_SIZE,
-  //           photo.name,
-  //         ]),
-  //       });
-  //     } else {
-  //       failedPhotos.push({
-  //         name: image.originalname,
-  //         message: `${image.originalname} can not be uploaded!`,
-  //       });
-  //       fs.rmSync(image.path);
-  //     }
-  //   }
-  //   if (uploadedPhotos.length > 0) {
-  //     this.em.emit('images.uploaded', { uploadedPhotos, user });
-  //   }
-  //   return { imagesUploaded: uploadedPhotos, imagesFailed: failedPhotos };
-  // }
-
-  async createImage(
+  async createSingleImage(
     createImageDto: CreateImageDto,
     newsimages: Express.Multer.File,
   ): Promise<CreateImageType> {
