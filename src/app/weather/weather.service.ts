@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 import { WeatherResponseType } from 'src/types/weather-response.type';
@@ -12,6 +12,11 @@ export class WeatherService {
     try {
       const response = await axios.get(apiUrl);
 
+      if (response.status !== 200) {
+        throw new Error(
+          `Failed to fetch weather data. Status code: ${response.status}`,
+        );
+      }
       const weatherData: WeatherResponseType = {
         cityName: response.data.name,
         country: response.data.sys.country,
@@ -20,9 +25,21 @@ export class WeatherService {
       };
       return weatherData;
     } catch (error) {
-      throw new Error(
-        `Failed to fetch weather data: ${returnMessages.SomethingWentWrong}`,
-      );
+      const typedError = error as { response?: { status?: number } };
+
+      if (typedError.response && typedError.response.status === 404) {
+        throw new HttpException(
+          `City not found: ${city}`,
+          HttpStatus.NOT_FOUND,
+        );
+      } else if (typedError.response && typedError.response.status === 401) {
+        throw new HttpException(`Invalid API key`, HttpStatus.UNAUTHORIZED);
+      } else {
+        throw new HttpException(
+          `Failed to fetch weather data: ${returnMessages.SomethingWentWrong}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
     }
   }
 }
