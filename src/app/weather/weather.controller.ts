@@ -12,4 +12,9 @@ export class WeatherController {
   async getWeather(@Param('city') city: string): Promise<WeatherResponseType> {
     return this.weatherService.getWeather(city);
   }
+
+  @Get('/all-data/:city')
+  async getAllWeatherData(@Param('city') city: string) {
+    return this.weatherService.getAllWeatherData(city);
+  }
 }
