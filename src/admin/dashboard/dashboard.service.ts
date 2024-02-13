@@ -56,16 +56,22 @@ export class DashboardService {
         'title',
         'text',
         'datetime',
+        'createdAt',
+        'updatedAt',
         'deletedAt',
         'author.id',
+        'author.name',
         'category.id',
+        'category.category',
         'images.id',
+        'images.name',
       ],
       filterableColumns: { 'category.id': [FilterOperator.EQ] },
     };
     const qb = this.newsRepository
       .createQueryBuilder('news')
-      .leftJoin('news.category', 'categories.id');
+      .select(paginateConfig.select);
+
     return await paginate<News>(query, qb, paginateConfig);
   }
 }
