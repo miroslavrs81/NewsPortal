@@ -11,7 +11,6 @@ import { User } from 'src/entities/user.entity';
 import { Category } from 'src/entities/category.entity';
 import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 import { UpdateNewsDto } from './dto/update-news.dto';
-// import { existsSync, mkdirSync } from 'fs';
 import { Image } from 'src/entities/image.entity';
 import { makeUrlPath } from 'src/helpers/make-url-path.helper';
 import * as fs from 'fs';
@@ -19,7 +18,6 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CreateImageType } from 'src/types/image.type';
 import { join } from 'path';
 import { CreateImageDto } from './dto/create-image.dto';
-// import { resizeImage } from 'src/helpers/gm.helper';
 
 @Injectable()
 export class AdminNewsService {
@@ -99,6 +97,20 @@ export class AdminNewsService {
       ...newImage,
       path,
     };
+  }
+
+  async createMultipleImages(
+    createImageDto: CreateImageDto,
+    newsimages: Array<Express.Multer.File>,
+  ): Promise<CreateImageType[]> {
+    const createdImages: CreateImageType[] = [];
+
+    for (const image of newsimages) {
+      const createdImage = await this.createSingleImage(createImageDto, image);
+      createdImages.push(createdImage);
+    }
+
+    return createdImages;
   }
 
   async removeNews(id: number, user: User) {

@@ -9,6 +9,7 @@ import {
   Post,
   Put,
   UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -22,14 +23,11 @@ import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/entities/user.entity';
 import { UpdateNewsDto } from './dto/update-news.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { newsImagesStorage } from 'src/config/multer.config';
 import { CreateImageDto } from './dto/create-image.dto';
 import { FileValidator } from 'src/validators/file.validator';
 import { CreateImageType } from 'src/types/image.type';
-// import { newsImagesStorage } from 'src/config/multer.config';
-// import { CreateImageType } from 'src/types/image.type';
-// import { CreateImageDto } from './dto/create-image.dto';
-// import { FilesInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(AdminRoleGuard)
 @ApiTags('admin-news')
@@ -82,6 +80,37 @@ export class AdminNewsController {
     newsimages: Express.Multer.File,
   ): Promise<CreateImageType> {
     return await this.newsService.createSingleImage(createImageDto, newsimages);
+  }
+
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        newsimages: {
+          type: 'array',
+          items: {
+            type: 'string',
+            format: 'binary',
+          },
+        },
+        newsId: {
+          type: 'number',
+        },
+      },
+    },
+  })
+  @Post('/newsimages')
+  @UseInterceptors(FilesInterceptor('newsimages', 5, newsImagesStorage))
+  async createMultiImages(
+    @Body() createImageDto: CreateImageDto,
+    @UploadedFiles(FileValidator)
+    newsimages: Express.Multer.File[],
+  ): Promise<CreateImageType[]> {
+    return await this.newsService.createMultipleImages(
+      createImageDto,
+      newsimages,
+    );
   }
 
   @ApiBearerAuth()
