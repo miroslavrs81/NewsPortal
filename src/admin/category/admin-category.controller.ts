@@ -9,14 +9,17 @@ import {
   Put,
   Get,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Category } from 'src/entities/category.entity';
 import { AdminCategoryService } from './admin-category.service';
+import { AdminRoleGuard } from 'src/guards/admin-role.guard';
 
 @ApiTags('admin-categories')
 @ApiBearerAuth()
+@UseGuards(AdminRoleGuard)
 @Controller('/admin/categories')
 export class AdminCategoryController {
   constructor(private readonly categoryService: AdminCategoryService) {}

@@ -8,9 +8,9 @@ import { AdminCategoryService } from '../category/admin-category.service';
 import { News } from 'src/entities/news.entity';
 import { AdminRoleGuard } from 'src/guards/admin-role.guard';
 
-@UseGuards(AdminRoleGuard)
 @ApiTags('admin-dashboard')
 @ApiBearerAuth()
+@UseGuards(AdminRoleGuard)
 @Controller('admin/dashboard')
 export class DashboardController {
   constructor(

@@ -22,4 +22,6 @@ export const returnMessages = Object.freeze({
   ResetTokenSent: 'Reset token sent successfully',
   InvalidResetToken: 'Invalid or expired reset token',
   PasswordReset: 'Password reset successfully',
+  PasswordTooWeak:
+    'Password too weak! Must contain minimum 6 characters, at least one UPPERCASE letter, one lowercase letter, one number, and one special character!',
 });

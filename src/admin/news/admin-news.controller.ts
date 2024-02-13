@@ -19,7 +19,6 @@ import { CreateNewsDto } from './dto/create-news.dto';
 import { News } from 'src/entities/news.entity';
 import { AdminRoleGuard } from 'src/guards/admin-role.guard';
 import { GetUser } from 'src/decorator/get-user.decorator';
-import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/entities/user.entity';
 import { UpdateNewsDto } from './dto/update-news.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -29,15 +28,13 @@ import { CreateImageDto } from './dto/create-image.dto';
 import { FileValidator } from 'src/validators/file.validator';
 import { CreateImageType } from 'src/types/image.type';
 
-@UseGuards(AdminRoleGuard)
 @ApiTags('admin-news')
 @ApiBearerAuth()
+@UseGuards(AdminRoleGuard)
 @Controller('/admin/news')
 export class AdminNewsController {
   constructor(private readonly newsService: AdminNewsService) {}
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
   @Post()
   async createNews(
     @GetUser() user: User,
@@ -46,8 +43,6 @@ export class AdminNewsController {
     return this.newsService.createNews(user, newsDto);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
   @Put('/:id')
   async updateNews(
     @Param('id', ParseIntPipe) id: number,
@@ -113,8 +108,6 @@ export class AdminNewsController {
     );
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
   @HttpCode(204)
   @Delete('/:id')
   async removeNews(
@@ -124,8 +117,6 @@ export class AdminNewsController {
     return await this.newsService.removeNews(+id, user);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
   @Patch('/:id/restore')
   async restoreNews(
     @Param('id', ParseIntPipe) id: number,

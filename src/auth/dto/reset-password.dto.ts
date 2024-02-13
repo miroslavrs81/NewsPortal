@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, Matches } from 'class-validator';
+import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 
 export class ResetPasswordDto {
   @ApiProperty()
@@ -7,8 +8,7 @@ export class ResetPasswordDto {
   @Matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
     {
-      message:
-        'Password too weak! Must contain minimum 6 characters, at least one UPPERCASE letter, one lowercase letter, one number, and one special character!',
+      message: returnMessages.PasswordTooWeak,
     },
   )
   newPassword: string;
