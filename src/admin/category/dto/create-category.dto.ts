@@ -8,5 +8,5 @@ export class CreateCategoryDto {
   @Length(1, 50, {
     message: returnMessages.CategoryNameLength,
   })
-  category: string;
+  name: string;
 }

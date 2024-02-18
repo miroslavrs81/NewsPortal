@@ -16,7 +16,7 @@ export class AdminCategoryService {
     createCategoryDto: CreateCategoryDto,
   ): Promise<Category> {
     const category = await this.categoryRepository.findOneBy({
-      category: createCategoryDto.category,
+      name: createCategoryDto.name,
     });
     if (category) {
       throw new BadRequestException(returnMessages.CategoryAlreadyExists);
@@ -35,7 +35,7 @@ export class AdminCategoryService {
       throw new BadRequestException(returnMessages.CategoryNotFound);
     }
 
-    category.category = updateCategoryDto.category;
+    category.name = updateCategoryDto.name;
     const updatedCategory = await this.categoryRepository.save(category);
     return updatedCategory;
   }

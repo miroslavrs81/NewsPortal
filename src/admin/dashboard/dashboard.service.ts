@@ -62,7 +62,7 @@ export class DashboardService {
         'author.id',
         'author.name',
         'category.id',
-        'category.category',
+        'category.name',
         'images.id',
         'images.name',
       ],

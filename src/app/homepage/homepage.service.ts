@@ -22,11 +22,11 @@ export class HomepageService {
       defaultLimit: 20,
       relations: ['category'],
       sortableColumns: ['id'],
-      defaultSortBy: [['category.category', 'ASC']],
+      defaultSortBy: [['category.name', 'ASC']],
       select: [
         'news.title',
         'SUBSTRING_INDEX(news.text, ".", 1) as truncatedText',
-        'category.category',
+        'category.name',
       ],
     };
     const qb = this.newsRepository.createQueryBuilder('news');

@@ -10,5 +10,5 @@ export class Category {
   news: News[];
 
   @Column({ type: 'varchar', length: 50 })
-  category: string;
+  name: string;
 }
