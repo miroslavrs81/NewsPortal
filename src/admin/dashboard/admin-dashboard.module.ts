@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { DashboardService } from './dashboard.service';
-import { DashboardController } from './dashboard.controller';
+import { AdminDashboardService } from './admin-dashboard.service';
+import { AdminDashboardController } from './admin-dashboard.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { AdminCategoryService } from '../category/admin-category.service';
@@ -10,7 +10,7 @@ import { Image } from 'src/entities/image.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, News, Category, Image])],
-  controllers: [DashboardController],
-  providers: [DashboardService, AdminCategoryService],
+  controllers: [AdminDashboardController],
+  providers: [AdminDashboardService, AdminCategoryService],
 })
-export class DashboardModule {}
+export class AdminDashboardModule {}

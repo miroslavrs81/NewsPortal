@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { PageController } from './admin-page.controller';
+import { AdminPageController } from './admin-page.controller';
 
 @Module({
-  controllers: [PageController],
+  controllers: [AdminPageController],
 })
-export class PageModule {}
+export class AdminPageModule {}

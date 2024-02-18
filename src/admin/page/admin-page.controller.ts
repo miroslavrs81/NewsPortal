@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('admin-pages')
 @Controller('page')
-export class PageController {
+export class AdminPageController {
   @Get()
   @Render('page')
   root() {

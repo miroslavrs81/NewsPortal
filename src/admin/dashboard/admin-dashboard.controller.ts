@@ -1,6 +1,6 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { DashboardService } from './dashboard.service';
+import { AdminDashboardService } from './admin-dashboard.service';
 import { User } from 'src/entities/user.entity';
 import { Paginate, PaginateQuery, Paginated } from 'nestjs-paginate';
 import { Category } from 'src/entities/category.entity';
@@ -12,9 +12,9 @@ import { AdminRoleGuard } from 'src/guards/admin-role.guard';
 @ApiBearerAuth()
 @UseGuards(AdminRoleGuard)
 @Controller('admin/dashboard')
-export class DashboardController {
+export class AdminDashboardController {
   constructor(
-    private readonly dashboardService: DashboardService,
+    private readonly dashboardService: AdminDashboardService,
     private readonly categoryService: AdminCategoryService,
   ) {}
 

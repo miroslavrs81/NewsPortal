@@ -12,7 +12,7 @@ import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class DashboardService {
+export class AdminDashboardService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
