@@ -40,7 +40,7 @@ export class HomepageService {
       sortableColumns: ['id'],
       defaultSortBy: [['id', 'ASC']],
       searchableColumns: ['title', 'text'],
-      select: ['title', 'datetime', 'text'],
+      select: ['title', 'createdAt', 'text'],
       filterableColumns: { 'category.id': [FilterOperator.EQ] },
     };
     const qb = this.newsRepository.createQueryBuilder('news');

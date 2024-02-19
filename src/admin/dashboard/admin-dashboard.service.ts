@@ -48,14 +48,13 @@ export class AdminDashboardService {
     const paginateConfig: PaginateConfig<News> = {
       defaultLimit: 20,
       relations: ['category', 'author', 'images'],
-      sortableColumns: ['id', 'datetime'],
+      sortableColumns: ['id', 'createdAt'],
       defaultSortBy: [['id', 'ASC']],
       searchableColumns: ['title', 'text'],
       select: [
         'id',
         'title',
         'text',
-        'datetime',
         'createdAt',
         'updatedAt',
         'deletedAt',

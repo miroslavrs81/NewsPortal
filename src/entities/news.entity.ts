@@ -32,9 +32,6 @@ export class News {
   @Column({ type: 'varchar', length: 50 })
   title: string;
 
-  @CreateDateColumn({ type: 'datetime' })
-  datetime: Date;
-
   @Column({ type: 'text' })
   text: string;
 
