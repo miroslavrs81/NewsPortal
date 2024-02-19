@@ -1,12 +1,14 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('admin-pages')
-@Controller('page')
+@Controller('/page')
 export class AdminPageController {
-  @Get()
-  @Render('page')
+  @Get('/')
   root() {
-    return { message: 'Hello world!' };
+    return {
+      message:
+        'Server has successfully started on port: ' + process.env.APP_PORT,
+    };
   }
 }
