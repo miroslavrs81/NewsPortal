@@ -4,8 +4,8 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('app-page')
 @Controller('/page')
 export class PageController {
-  @Get('/about-us')
-  @Render('about-us')
+  @Get('/page')
+  @Render('page')
   getAboutUsPage() {
     return {};
   }
