@@ -24,4 +24,8 @@ export const returnMessages = Object.freeze({
   PasswordReset: 'Password reset successfully',
   PasswordTooWeak:
     'Password too weak! Must contain minimum 6 characters, at least one UPPERCASE letter, one lowercase letter, one number, and one special character!',
+  ApiKeyOrBaseUrlMissing: `Api key or base URL is missing`,
+  FailedToFetchWeatherData: `Failed to fetch weather data.`,
+  CityNotFound: `City not found: `,
+  InvalidApiKey: `Invalid API key`,
 });
