@@ -7,6 +7,7 @@ import {
   Paginated,
   paginate,
 } from 'nestjs-paginate';
+import { Category } from 'src/entities/category.entity';
 import { News } from 'src/entities/news.entity';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -18,6 +19,8 @@ export class AdminDashboardService {
     private userRepository: Repository<User>,
     @InjectRepository(News)
     private newsRepository: Repository<News>,
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>,
   ) {}
 
   async getUsersList(query: PaginateQuery): Promise<Paginated<User>> {
@@ -72,5 +75,17 @@ export class AdminDashboardService {
       .select(paginateConfig.select);
 
     return await paginate<News>(query, qb, paginateConfig);
+  }
+
+  async getTotals() {
+    const totalUsers = await this.userRepository.count();
+    const totalNews = await this.newsRepository.count();
+    const totalCategories = await this.categoryRepository.count();
+
+    return {
+      totalUsers,
+      totalNews,
+      totalCategories,
+    };
   }
 }

@@ -69,4 +69,10 @@ export class AdminDashboardController {
   ): Promise<Paginated<News>> {
     return await this.dashboardService.getNewsList(query);
   }
+
+  @Get('/totals')
+  async getTotals() {
+    const totals = await this.dashboardService.getTotals();
+    return totals;
+  }
 }
