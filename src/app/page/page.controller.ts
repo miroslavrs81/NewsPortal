@@ -2,11 +2,9 @@ import { Controller, Get, Render } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('app-page')
-@Controller('/page')
+@Controller('/')
 export class PageController {
   @Get('/page')
-  @Render('page')
-  getAboutUsPage() {
-    return {};
-  }
+  @Render('page.ejs')
+  getAboutUsPage() {}
 }

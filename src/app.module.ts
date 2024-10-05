@@ -14,7 +14,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', process.env.PUBLIC || 'public'),
+      rootPath: join(__dirname, '..', 'public'),
       exclude: ['/*'],
     }),
     ConfigModule.forRoot(),

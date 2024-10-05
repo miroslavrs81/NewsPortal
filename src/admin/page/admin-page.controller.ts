@@ -2,9 +2,9 @@ import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('admin-pages')
-@Controller('/page')
+@Controller('/admin')
 export class AdminPageController {
-  @Get('/')
+  @Get('/page')
   root() {
     return {
       message:
