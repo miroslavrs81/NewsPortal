@@ -17,6 +17,8 @@ section {
 h1 {
     color: #333;
     font-size: 2rem;
+    text-align: center;
+    margin-top: 20px;
 }
 
 h2 {
@@ -35,6 +37,8 @@ h2 {
     flex: 1;
     max-width: 60%; 
     margin-right: 5rem;
+    align-items: flex-start;
+    
 }
 
 .image-container {
@@ -53,7 +57,7 @@ h2 {
 
     .content-container {
         flex-direction: column;
-        align-items: center;
+        align-items: left;
     }
 
 }

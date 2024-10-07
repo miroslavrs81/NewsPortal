@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us Page</title>
-    <link rel="stylesheet" href="../css/styless.css">
-</head>
-
-<body>
-    <header>
-        <h1>About Us Page</h1>
+<%- include('./shared/header') %>
+        <h1>About Us</h1>
     </header>
     <section class="content-container">
         <div class="text-container">
@@ -22,6 +11,7 @@
 
         <h2>Meet the Team</h2>
         <p>Get to know the faces behind our success:</p>
+        
         <ul>
             <li><a href="https://www.facebook.com/miroslav.ilic.165">Miroslav Ilic - CEO</a></li>
             <li><a href="https://www.facebook.com/milos.stefanovic.507">Milos Stefanovic - CTO</a></li>
@@ -29,9 +19,8 @@
         </ul>
     </div>
     <div class="image-container">
-    <img class="image" src="./images/news-image.jpg" alt="news on mobile"/>"
+    <img class="image" src="./images/news-image.jpg" alt="news on mobile"/>
     </div>
     </section>
-</body>
+    <%- include('./shared/footer') %>
 
-</html>
