@@ -1,9 +1,12 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { AdminDashboardService } from 'src/admin/dashboard/admin-dashboard.service';
 
 @ApiTags('app-page')
 @Controller('/')
 export class PageController {
+  constructor(private readonly dashboardService: AdminDashboardService) {}
+
   @Get('/')
   @Render('homePage.ejs')
   gethomepagePage() {
@@ -18,7 +21,11 @@ export class PageController {
 
   @Get('/dashboard')
   @Render('dashboard.ejs')
-  getDashboardPage() {
-    return { title: 'Dashboard' };
+  async getDashboardPage() {
+    const totals = await this.dashboardService.getTotals();
+    return {
+      title: 'Dashboard',
+      totals,
+    };
   }
 }

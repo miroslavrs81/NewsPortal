@@ -1,3 +1,13 @@
 <%- include('./shared/header') %>
 <h1>Dashboard Page</h1>
+
+  <div class="alert alert-primary" role="alert">
+    <p>Total Users: <%= totals.totalUsers %></p>
+  </div>
+  <div class="alert alert-light" role="alert">
+    <p>Total News: <%= totals.totalNews %></p>
+  </div>
+  <div class="alert alert-danger" role="alert">
+    <p>Total Categories: <%= totals.totalCategories %></p>
+  </div>
 <%- include('./shared/footer') %>
