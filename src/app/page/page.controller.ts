@@ -1,11 +1,15 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AdminDashboardService } from 'src/admin/dashboard/admin-dashboard.service';
+import { AdminPageService } from 'src/admin/page/admin-page.service';
 
 @ApiTags('app-page')
 @Controller('/')
 export class PageController {
-  constructor(private readonly dashboardService: AdminDashboardService) {}
+  constructor(
+    private readonly dashboardService: AdminDashboardService,
+    private readonly pageService: AdminPageService,
+  ) {}
 
   @Get('/')
   @Render('homePage.ejs')
@@ -16,7 +20,7 @@ export class PageController {
   @Get('/about')
   @Render('about.ejs')
   getAboutUsPage() {
-    return { title: 'About Us' };
+    return this.pageService.getAboutPage();
   }
 
   @Get('/dashboard')

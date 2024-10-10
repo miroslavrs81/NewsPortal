@@ -1,11 +1,19 @@
 import { Controller, Get, Render } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AdminPageService } from './admin-page.service';
+import { AdminDashboardService } from '../dashboard/admin-dashboard.service';
 
 @ApiTags('admin-pages')
+@ApiBearerAuth()
 @Controller('/admin')
 export class AdminPageController {
+  constructor(
+    private readonly pageService: AdminPageService,
+    private readonly dashboardService: AdminDashboardService,
+  ) {}
+
   @Get('/')
-  @Render('homePage')
+  @Render('homePage.ejs')
   getHomePage() {
     return { title: 'Home page' };
   }
@@ -13,25 +21,16 @@ export class AdminPageController {
   @Get('/about')
   @Render('about.ejs')
   getAboutPage() {
+    return this.pageService.getAboutPage();
+  }
+
+  @Get('/dashboard')
+  @Render('dashboard.ejs')
+  async getDashboardPage() {
+    const totals = await this.dashboardService.getTotals();
     return {
-      title: 'About us',
-      teamMembers: [
-        {
-          name: 'Miroslav Ilic',
-          position: 'CEO',
-          fb: '',
-        },
-        {
-          name: 'Milos Stefanovic',
-          position: 'CTO',
-          fb: '',
-        },
-        {
-          name: 'Micko Tomic',
-          position: 'Marketing Director',
-          fb: '',
-        },
-      ],
+      title: 'Dashboard',
+      totals,
     };
   }
 }

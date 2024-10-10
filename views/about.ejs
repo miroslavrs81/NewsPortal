@@ -11,15 +11,24 @@
 
         <h2>Meet the Team</h2>
         <p>Get to know the faces behind our success:</p>
-        
-        <ul>
-            <li><a href="https://www.facebook.com/miroslav.ilic.165">Miroslav Ilic - CEO</a></li>
-            <li><a href="https://www.facebook.com/milos.stefanovic.507">Milos Stefanovic - CTO</a></li>
-            <li><a href="https://www.facebook.com/miloradvrle">Micko Tomic - Marketing Director</a></li>
-        </ul>
+        <div class="container">
+
+        <% teamMembers.forEach(function(member) { %>
+            <div class="row py-3">
+                <div class="col-sm">
+            <%- member.firstName %>
+            <%- member.lastName %><br/>
+            <%- member.position %><br/>
+            <a href="<%- member.github %>">Github Profile</a>
+           </div>
+                <div class="col-sm">
+                </div>
+            </div>
+          <% }); %>
+        </div>
     </div>
     <div class="image-container">
-    <img class="image" src="./images/news-image.jpg" alt="news on mobile"/>
+    <img class="image" src="/images/news-image.jpg" alt="news on mobile"/>
     </div>
     </section>
     <%- include('./shared/footer') %>
