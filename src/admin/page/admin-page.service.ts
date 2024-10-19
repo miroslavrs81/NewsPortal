@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AdminPageService {
   getAboutPage() {
     return {
-      title: 'About us',
+      title: 'About',
       teamMembers: [
         {
           firstName: 'Miroslav',
