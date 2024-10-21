@@ -12,12 +12,6 @@ export class AdminPageController {
     private readonly dashboardService: AdminDashboardService,
   ) {}
 
-  @Get('/')
-  @Render('homePage.ejs')
-  getHomePage() {
-    return { title: 'Home page' };
-  }
-
   @Get('/about')
   @Render('about.ejs')
   getAboutPage() {
