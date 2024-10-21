@@ -1,10 +1,12 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminPageService } from './admin-page.service';
 import { AdminDashboardService } from '../dashboard/admin-dashboard.service';
+import { AdminRoleGuard } from 'src/guards/admin-role.guard';
 
 @ApiTags('admin-pages')
 @ApiBearerAuth()
+@UseGuards(AdminRoleGuard)
 @Controller('/admin')
 export class AdminPageController {
   constructor(
