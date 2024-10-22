@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'page_profiles' })
-export class Page {
+export class PageProfile {
   @PrimaryGeneratedColumn()
   id: number;
 
