@@ -25,7 +25,7 @@ export class AdminDashboardService {
 
   async getUsersList(query: PaginateQuery): Promise<Paginated<User>> {
     const paginateConfig: PaginateConfig<User> = {
-      defaultLimit: 50,
+      defaultLimit: +process.env.DEFAULT_LIMIT,
       sortableColumns: ['id'],
       relations: [],
       defaultSortBy: [['id', 'ASC']],
@@ -49,7 +49,7 @@ export class AdminDashboardService {
 
   async getNewsList(query: PaginateQuery): Promise<Paginated<News>> {
     const paginateConfig: PaginateConfig<News> = {
-      defaultLimit: 20,
+      defaultLimit: +process.env.DEFAULT_LIMIT,
       relations: ['category', 'author', 'images'],
       sortableColumns: ['id', 'createdAt'],
       defaultSortBy: [['id', 'ASC']],

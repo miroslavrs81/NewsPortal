@@ -20,7 +20,7 @@ export class AdminUserService {
 
   async getUsersList(query: PaginateQuery): Promise<Paginated<User>> {
     const paginateConfig: PaginateConfig<User> = {
-      defaultLimit: 50,
+      defaultLimit: +process.env.DEFAULT_LIMIT,
       sortableColumns: ['id'],
       relations: [],
       defaultSortBy: [['id', 'DESC']],

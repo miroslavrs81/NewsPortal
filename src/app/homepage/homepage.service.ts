@@ -19,7 +19,7 @@ export class HomepageService {
 
   async getNewsByCategories(query: PaginateQuery): Promise<Paginated<News>> {
     const paginateConfig: PaginateConfig<News> = {
-      defaultLimit: 20,
+      defaultLimit: +process.env.DEFAULT_LIMIT,
       relations: ['category'],
       sortableColumns: ['id'],
       defaultSortBy: [['category.name', 'ASC']],
@@ -35,7 +35,7 @@ export class HomepageService {
 
   async getAllNewsWithImages(query: PaginateQuery): Promise<Paginated<News>> {
     const paginateConfig: PaginateConfig<News> = {
-      defaultLimit: 20,
+      defaultLimit: +process.env.DEFAULT_LIMIT,
       relations: ['images', 'category'],
       sortableColumns: ['id'],
       defaultSortBy: [['id', 'ASC']],
