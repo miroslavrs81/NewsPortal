@@ -44,6 +44,9 @@ export class AdminCategoryService {
     category: Category[];
     count: number;
   }> {
+    if (sortOrder !== 'ASC' && sortOrder !== 'DESC') {
+      throw new BadRequestException(returnMessages.InvalidSortOrderValue);
+    }
     const qb = this.categoryRepository.createQueryBuilder('categories');
 
     const [category, count] = await qb

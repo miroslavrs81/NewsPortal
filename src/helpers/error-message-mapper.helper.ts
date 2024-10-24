@@ -28,4 +28,5 @@ export const returnMessages = Object.freeze({
   FailedToFetchWeatherData: `Failed to fetch weather data.`,
   CityNotFound: `City not found: `,
   InvalidApiKey: `Invalid API key`,
+  InvalidSortOrderValue: `Invalid sortOrder value. Please use 'ASC' or 'DESC'`,
 });

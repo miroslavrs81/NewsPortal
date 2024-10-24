@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Category } from 'src/entities/category.entity';
 import { AdminCategoryService } from './admin-category.service';
 import { AdminRoleGuard } from 'src/guards/admin-role.guard';
@@ -42,6 +42,12 @@ export class AdminCategoryController {
     );
   }
 
+  @ApiQuery({
+    name: 'sortOrder',
+    required: true,
+    type: 'string',
+    description: 'Accepts ASC or DESC',
+  })
   @Get('/')
   async getCategoryList(
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC',
