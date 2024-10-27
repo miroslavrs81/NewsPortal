@@ -16,6 +16,6 @@ export type WeatherResponseType = {
   seaLevel?: number;
   groundLevel?: number;
   visibility?: number;
-  sunrise?: number;
-  sunset?: number;
+  sunrise?: Date;
+  sunset?: Date;
 };

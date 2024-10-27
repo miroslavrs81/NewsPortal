@@ -45,8 +45,8 @@ export const fetchWeatherData = async (
       seaLevel: response.data.main.sea_level,
       groundLevel: response.data.main.grnd_level,
       visibility: response.data.visibility,
-      sunrise: response.data.sys.sunrise,
-      sunset: response.data.sys.sunset,
+      sunrise: new Date(response.data.sys.sunrise * 1000),
+      sunset: new Date(response.data.sys.sunset * 1000),
     };
 
     return data;
