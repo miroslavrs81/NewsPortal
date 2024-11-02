@@ -1,35 +1,47 @@
 <%- include('./shared/header') %>
-        <h1>About Us</h1>
-    </header>
-    <section class="content-container">
-        <div class="text-container">
-        <h2>Our Story</h2>
+    <h1>About Us</h1>
+     <section class="content-container">
+    <div class="text-container">
+        <!-- <h2>Our Story</h2>
         <p>Welcome to our News Portal! We are dedicated to...</p>
 
         <h2>Our Mission</h2>
-        <p>Our mission is to give you latest info...</p>
+        <p>Our mission is to give you the latest info...</p>
 
         <h2>Meet the Team</h2>
-        <p>Get to know the faces behind our success:</p>
+        <p>Get to know the faces behind our success:</p> -->
+
         <div class="container">
+            <h2><strong>Title:</strong> <%- title %></h2>
+            <h2><strong>Content:</strong> <%- content %></h2>
+            <% const teamMembers = (metadata && metadata.teamMembers) || []; %>
 
-        <% teamMembers.forEach(function(member) { %>
-            <div class="row py-2">
-                <div class="col-sm">
-            <%- member.firstName %>
-            <%- member.lastName %><br/>
-            <%- member.position %><br/>
-            <a href="<%- member.github %>">Github Profile</a>
-           </div>
-                <div class="col-sm">
+            <% teamMembers.forEach(function(member) { %>
+                <div class="row py-2">
+                    <div class="col-sm">
+                        <% if (member.firstName !== "string" && member.lastName !== "string") { %>
+                        <p><strong>Name:</strong> <%- member.firstName %> <%- member.lastName %></p>
+                        <% } %>
+                        <% if (member.position !== "string") { %>
+                        <p><strong>Position:</strong> <%- member.position %></p>
+                        <% } %>
+                        <% if (member.email !== "string") { %>
+                        <p><strong>Email:</strong> <%- member.email %></p>
+                        <% } %>
+                        <% if (member.githubProfile !== "string") { %>
+                            <p><strong>GitHub:</strong> <a href="<%- member.githubProfile %>"><%- member.githubProfile %></a></p>
+                        <% } %>
+                        <% if (member.linkedInProfile !== "string") { %>
+                            <p><strong>LinkedIn:</strong> <a href="<%- member.linkedInProfile %>"><%- member.linkedInProfile %></a></p>
+                        <% } %>
+                    </div>
                 </div>
-            </div>
-          <% }); %>
-        </div>
-    </div>
+              <% }) %>
+              
+    
     <div class="image-container">
-    <img class="image" src="/images/news-image.jpg" alt="news on mobile"/>
+        <img class="image" src="/images/news-image.jpg" alt="news on mobile"/>
     </div>
-    </section>
-    <%- include('./shared/footer') %>
+</section>
 
+<%- include('./shared/footer') %>

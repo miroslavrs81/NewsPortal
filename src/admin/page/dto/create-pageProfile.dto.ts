@@ -37,9 +37,9 @@ export class Metadata {
 }
 
 export class CreatePageProfileDto {
-  @ApiProperty()
+  @ApiProperty({ default: 'About' })
   @IsString()
-  title: string;
+  title: string = 'About';
 
   @ApiProperty()
   @IsString()

@@ -6,11 +6,6 @@ export class UpdatePageProfileDto {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
-  title?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsString()
   content?: string;
 
   @ApiProperty({ type: Metadata, required: false })
