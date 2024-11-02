@@ -6,9 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { News } from 'src/entities/news.entity';
 import { Category } from 'src/entities/category.entity';
+import { PageProfile } from 'src/entities/page-profile.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, News, Category])],
+  imports: [TypeOrmModule.forFeature([PageProfile, User, News, Category])],
   controllers: [AdminPageController],
   providers: [AdminPageService, AdminDashboardService],
 })
