@@ -31,4 +31,5 @@ export const returnMessages = Object.freeze({
   InvalidSortOrderValue: `Invalid sortOrder value. Please use 'ASC' or 'DESC'`,
   NotFoundPageProfileWithID: `Not found PageProfile with ID: `,
   AboutPageNotFound: 'About page not found',
+  ApiIsRunning: 'API is running',
 });

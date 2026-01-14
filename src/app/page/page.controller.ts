@@ -1,20 +1,19 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AdminPageService } from 'src/admin/page/admin-page.service';
+import { returnMessages } from 'src/helpers/error-message-mapper.helper';
 
-@ApiTags('app-page')
-@Controller('/')
+@ApiTags('pages')
+@Controller('api/pages')
 export class PageController {
   constructor(private readonly pageService: AdminPageService) {}
 
   @Get('/')
-  @Render('homePage.ejs')
   gethomepagePage() {
-    return { title: 'Home page' };
+    return { title: 'Home page', message: returnMessages.ApiIsRunning };
   }
 
   @Get('/about')
-  @Render('about.ejs')
   getAboutUsPage() {
     return this.pageService.getAboutPage();
   }

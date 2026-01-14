@@ -24,7 +24,7 @@ export class AdminPageService {
     return aboutPage;
   }
 
-  async findPageProfileByTitle(title: string): Promise<PageProfile | null> {
+  async findPageProfileByTitle(title: string): Promise<PageProfile> {
     return await this.pageProfileRepository.findOne({
       where: { title },
     });
